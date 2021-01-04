@@ -1,10 +1,47 @@
 from typing import List
 
 import GraphInterface
+import queue
 import json
 from GraphAlgoInterface import GraphAlgoInterface
 from DiGraph import DiGraph
 from node import Node
+
+
+def dijkstra(g, src, dest):
+    q = queue.PriorityQueue()
+    q.put(src)
+    path = {src: -1}                    # adding the src to the path and queue
+    while not q.empty():
+        curr = g.get_node(q.get())
+        if curr.info is None:           # true if we didn't visit this node
+            curr.info = 'v'
+            if curr.key == dest:        # when we get to dest node
+                return path
+            for k, v in g.all_out_edges_of_node(curr.key).items():       # moving on each neighbour of curr
+                temp = g.get_node(k)
+                if temp.info is None:       # true if we didn't visit this node
+                    w = v
+                    w += curr.weight
+                    if temp.weight != 0:
+                        if w < temp.weight:     # if the new weight is less then the exist
+                            temp.weight = w
+                            path[k] = curr.key
+                    else:                        # if it's first time we reach to this node
+                        temp.weight = w
+                        path[k] = curr.key
+                    q.put(temp.key)
+
+    return path
+
+
+def reset(g):
+    map1 = g.get_all_v()
+    for i in map1.keys():
+        n = g.get_node(i)
+        n.weight = 0.0
+        n.tag = 0
+        n.info = None
 
 
 class GraphAlgo(GraphAlgoInterface):
@@ -62,24 +99,23 @@ class GraphAlgo(GraphAlgoInterface):
         @param id1: The start node id
         @param id2: The end node id
         @return: The distance of the path, the path as a list
-
-        Example:
-#      >>> from GraphAlgo import GraphAlgo
-#       >>> g_algo = GraphAlgo()
-#        >>> g_algo.addNode(0)
-#        >>> g_algo.addNode(1)
-#        >>> g_algo.addNode(2)
-#        >>> g_algo.addEdge(0,1,1)
-#        >>> g_algo.addEdge(1,2,4)
-#        >>> g_algo.shortestPath(0,1)
-#        (1, [0, 1])
-#        >>> g_algo.shortestPath(0,2)
-#        (5, [0, 1, 2])
-
-        More info:
-        https://en.wikipedia.org/wiki/Dijkstra's_algorithm
         """
-        raise NotImplementedError
+        if self.graph.get_node(id1) is None and self.graph.get_node(id2) is None:
+            return -1, None
+        if id1 == id2:
+            return 0, [id1]
+        reset(self.graph)
+        path = dijkstra(self.graph, id1, id2)
+        n = self.graph.get_node(id2)
+        if n.weight == 0:               # true only if we didn't visit dest node
+            return -1, None
+        ans = []
+        v = id2
+        while v != -1:
+            ans.append(v)
+            v = path.get(v)
+        ans.reverse()
+        return n.weight, ans
 
     def connected_component(self, id1: int) -> list:
         """

@@ -27,6 +27,16 @@ class DiGraph(GraphInterface):
 
         return self.nodes
 
+    def get_node(self, id1):
+        """
+        :param id1:
+        :return: return the node with given ID
+        """
+        if self.nodes.__contains__(id1):
+            return self.nodes[id1]
+        else:
+            return None
+
     def all_in_edges_of_node(self, id1: int) -> dict:
         """ return a dictionary of all the nodes connected to (into) node_id ,
         each node is represented using a pair (key, weight) """

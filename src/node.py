@@ -12,3 +12,12 @@ class Node:
 
     def __repr__(self):
         return f"Node id #{self.key}"
+
+    def __lt__(self, other):
+        if self.weight == other.weight:
+            return 0
+        elif self.weight > other.weight:
+            return 1
+        else:
+            return -1
+
