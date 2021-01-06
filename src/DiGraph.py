@@ -6,8 +6,8 @@ class DiGraph(GraphInterface):
 
     def __init__(self):
         self.nodes = {}
+        self.edges = {}
         self.in_edges = {}
-        self.out_edges = {}
         self.mc = 0
         self.num_of_nodes = 0
         self.num_of_edges = 0
@@ -27,6 +27,16 @@ class DiGraph(GraphInterface):
 
         return self.nodes
 
+    def get_node(self, id1):
+        """
+        :param id1:
+        :return: return the node with given ID
+        """
+        if self.nodes.__contains__(id1):
+            return self.nodes[id1]
+        else:
+            return None
+
     def all_in_edges_of_node(self, id1: int) -> dict:
         """ return a dictionary of all the nodes connected to (into) node_id ,
         each node is represented using a pair (key, weight) """
@@ -37,7 +47,7 @@ class DiGraph(GraphInterface):
         """ return a dictionary of all the nodes connected from node_id ,
         each node is represented using a pair (key, weight) """
 
-        return self.out_edges.get(id1)
+        return self.edges.get(id1)
 
     def add_edge(self, id1: int, id2: int, weight: float) -> bool:
         """
@@ -49,7 +59,7 @@ class DiGraph(GraphInterface):
         """
 
         if self.nodes.__contains__(id1) and self.nodes.__contains__(id2) and id1 != id2 and not self.has_edge(id1, id2):
-            self.out_edges[id1][id2] = weight
+            self.edges[id1][id2] = weight
             self.in_edges[id2][id1] = weight
             self.num_of_edges += 1
             self.mc += 1
@@ -68,7 +78,7 @@ class DiGraph(GraphInterface):
             return False
         self.nodes[node_id] = Node(node_id, pos)
         self.in_edges[node_id] = {}
-        self.out_edges[node_id] = {}
+        self.edges[node_id] = {}
         self.num_of_nodes += 1
         self.mc += 1
 
@@ -84,13 +94,13 @@ class DiGraph(GraphInterface):
             out = self.all_out_edges_of_node(node_id)
             for i in out:
                 self.in_edges[i].pop(node_id)
-            self.out_edges.pop(node_id)
+            self.edges.pop(node_id)
             self.num_of_edges -= out.__len__()
             self.mc += out.__len__()
 
             inside = self.all_in_edges_of_node(node_id)
             for i in inside:
-                self.out_edges[i].pop(node_id)
+                self.edges[i].pop(node_id)
                 self.num_of_edges -= 1
                 self.mc += 1
 
@@ -111,7 +121,7 @@ class DiGraph(GraphInterface):
         """
 
         if self.has_edge(node_id1, node_id2):
-            self.out_edges[node_id1].pop(node_id2)
+            self.edges[node_id1].pop(node_id2)
             self.in_edges[node_id2].pop(node_id1)
             self.num_of_edges -= 1
             self.mc += 1
@@ -119,11 +129,11 @@ class DiGraph(GraphInterface):
         return False
 
     def has_edge(self, id1, id2):
-        if self.out_edges[id1].__contains__(id2):
+        if self.edges[id1].__contains__(id2):
             return True
         else:
             return False
 
     def __str__(self):
         return f"num of nodes: {self.num_of_nodes}, num of edges: {self.num_of_edges}, mc: {self.mc}," \
-               f" nodes: {self.nodes}, edges: {self.out_edges} in edges: {self.in_edges}"
+               f" nodes: {self.nodes}, edges: {self.edges}, in edges: {self.in_edges}"
