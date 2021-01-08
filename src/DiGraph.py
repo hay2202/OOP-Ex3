@@ -24,7 +24,6 @@ class DiGraph(GraphInterface):
     def get_all_v(self) -> dict:
         """ return a dictionary of all the nodes in the Graph,
          each node is represented using a pair  (key, node_data) """
-
         return self.nodes
 
     def get_node(self, id1):
@@ -76,7 +75,7 @@ class DiGraph(GraphInterface):
 
         if self.nodes.__contains__(node_id):
             return False
-        self.nodes[node_id] = Node(node_id, pos)
+        self.nodes[node_id] = node.Node(node_id, pos)
         self.in_edges[node_id] = {}
         self.edges[node_id] = {}
         self.num_of_nodes += 1
