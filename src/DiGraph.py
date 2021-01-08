@@ -76,7 +76,7 @@ class DiGraph(GraphInterface):
 
         if self.nodes.__contains__(node_id):
             return False
-        self.nodes[node_id] = Node(node_id, pos)
+        self.nodes[node_id] = Node(node_id, pos=pos)
         self.in_edges[node_id] = {}
         self.edges[node_id] = {}
         self.num_of_nodes += 1
