@@ -79,6 +79,7 @@ class GraphAlgo(GraphAlgoInterface):
         """
         return self.graph
 
+
     def load_from_json(self, file_name: str) -> bool:
         """
         Loads a graph from a json file.
