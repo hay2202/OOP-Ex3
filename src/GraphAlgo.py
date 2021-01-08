@@ -3,6 +3,8 @@ from typing import List
 import GraphInterface
 import queue
 import json
+import random
+import matplotlib.pyplot as plt
 from GraphAlgoInterface import GraphAlgoInterface
 from DiGraph import DiGraph
 from node import Node
@@ -11,26 +13,26 @@ from node import Node
 def dijkstra(g, src, dest):
     q = queue.PriorityQueue()
     q.put(src)
-    path = {src: -1}                    # adding the src to the path and queue
+    path = {src: -1}  # adding the src to the path and queue
     while not q.empty():
         curr = g.get_node(q.get())
-        if curr.info is None:           # true if we didn't visit this node
+        if curr.info is None:  # true if we didn't visit this node
             curr.info = 'v'
-            if curr.key == dest:        # when we get to dest node
+            if curr.id == dest:  # when we get to dest node
                 return path
-            for k, v in g.all_out_edges_of_node(curr.key).items():       # moving on each neighbour of curr
+            for k, v in g.all_out_edges_of_node(curr.id).items():  # moving on each neighbour of curr
                 temp = g.get_node(k)
-                if temp.info is None:       # true if we didn't visit this node
+                if temp.info is None:  # true if we didn't visit this node
                     w = v
                     w += curr.weight
                     if temp.weight != 0:
-                        if w < temp.weight:     # if the new weight is less then the exist
+                        if w < temp.weight:  # if the new weight is less then the exist
                             temp.weight = w
-                            path[k] = curr.key
-                    else:                        # if it's first time we reach to this node
+                            path[k] = curr.id
+                    else:  # if it's first time we reach to this node
                         temp.weight = w
-                        path[k] = curr.key
-                    q.put(temp.key)
+                        path[k] = curr.id
+                    q.put(temp.id)
 
     return path
 
@@ -44,33 +46,43 @@ def reset(g):
         n.info = None
 
 
-def transpoe(graph: GraphInterface):
-    transGraph = DiGraph()
-    neighbor_in = {}
-    neighbor_out = {}
-    for n in graph.get_all_v:
-        neighbor_in[n.key] = n.all_out_edges_of_node
-        neighbor_out[n.key] = n.all_in_edges_of_node
-        transGraph.add_node(n.key, n.pos)
-    for n in graph.get_all_v:
-        if neighbor_in.get(n) is not None and neighbor_out.get(n) is not None:
-            for o in neighbor_out.get(n.key):
-                temp = o
-                transGraph.add_edge(temp.key, n.key, temp.weight)
-            for i in neighbor_in.get(n.key):
-                temp = i
-                transGraph.add_edge(temp.key, n.key, temp.weight)
+def transpose(g: GraphInterface):
+    node_set = g.get_all_v()
+    nei = {}
+    trans_g = DiGraph()
 
-    reset(transGraph)
-    return transGraph
+    for k, v in node_set.items():
+        trans_g.add_node(k, v.pos)
+        nei[k] = g.all_out_edges_of_node(k)
+
+    for k, v in nei.items():
+        for i, w in v.items():
+            trans_g.add_edge(i, k, w)
+
+    reset(trans_g)
+    return trans_g
 
 
-
+def dfs(key: int, g: GraphInterface, k):
+    temp = g.get_node(key)
+    stack = [key]
+    k.append(key)
+    temp.info = 'p'
+    while stack:
+        n = stack.pop()
+        ll = list(g.all_out_edges_of_node(n).keys())
+        for i in ll:
+            if g.get_node(i).info is None:
+                stack.append(i)
+                g.get_node(i).info = 'p'
+                k.append(i)
+    reset(g)
+    return k
 
 
 class GraphAlgo(GraphAlgoInterface):
 
-    def __init__(self, g: GraphInterface):
+    def __init__(self, g: GraphInterface = None):
         self.graph = g
 
     def get_graph(self) -> GraphInterface:
@@ -89,14 +101,26 @@ class GraphAlgo(GraphAlgoInterface):
         try:
             with open(file_name, 'r') as f:
                 dict_algo = json.load(f)
-                nodes = dict_algo["nodes"]
-                for k, v in nodes.items():
-                    n = Node(**v)
-                    load_graph.add_node(n.key, n.pos)
-                edges = dict_algo["edges"]
-                for k, v in edges.items():
-                    for i in v.keys():
-                        load_graph.add_edge(int(k), int(i), float(v.get(i)))
+                nodes = dict_algo["Nodes"]
+
+                if isinstance(nodes, list):
+                    for i in nodes:
+                        n = Node(**i)
+                        load_graph.add_node(n.id, n.pos)
+
+                    edges = dict_algo["Edges"]
+                    for i in edges:
+                        load_graph.add_edge(id1=i['src'], id2=i['dest'], weight=i['w'])
+
+                elif isinstance(nodes, dict):
+                    for k, v in nodes.items():
+                        n = Node(**v)
+                        load_graph.add_node(n.id, n.pos)
+                    edges = dict_algo["Edges"]
+                    for k, v in edges.items():
+                        for i in v.keys():
+                            load_graph.add_edge(int(k), int(i), float(v.get(i)))
+
             self.graph = load_graph
         except IOError as e:
             print(e)
@@ -141,16 +165,6 @@ class GraphAlgo(GraphAlgoInterface):
         ans.reverse()
         return n.weight, ans
 
-    def dfs(self, key: int, g: GraphInterface, k=None):  # k=list ? bug maybe
-        temp = self.graph.get_node(key)
-        if temp.info != 'p':
-            return
-        temp.info = 'p'
-        k.append(temp)
-        for next in g.all_out_edges_of_node(key):
-            self.dfs(next.key, g, k)
-        return k
-
     def connected_component(self, id1: int) -> list:
         """
         Finds the Strongly Connected Component(SCC) that node id1 is a part of.
@@ -158,13 +172,17 @@ class GraphAlgo(GraphAlgoInterface):
         @return: The list of nodes in the SCC
         """
         x = []
-        lst1 = self.dfs(id1, self.graph, x)
-        # st1 = set(lst1)
-        trs_graph = transpoe(self.graph)
+        lst1 = dfs(id1, self.graph, x)
+        if lst1 is None:
+            return []
+        st1 = set(lst1)
+        trs_graph = transpose(self.graph)
         y = []
-        lst2 = self.dfs(id1, trs_graph, y)
-        # st2 = set(lst2)
-        return lst1 & lst2  # maybe its not work its cutting between groups
+        lst2 = dfs(id1, trs_graph, y)
+        if lst2 is None:
+            return []
+        st2 = set(lst2)
+        return list(st1 & st2)  # maybe its not work its cutting between groups
 
     def connected_components(self) -> List[list]:
         """
@@ -173,8 +191,8 @@ class GraphAlgo(GraphAlgoInterface):
         """
         graph = self.get_graph()
         lst = []
-        for i in graph.get_all_v:
-            lst.append(self.connected_component(i.key))
+        for i in graph.get_all_v().keys():
+            lst.append(self.connected_component(i))
         return lst
 
     def plot_graph(self) -> None:
@@ -187,8 +205,8 @@ class GraphAlgo(GraphAlgoInterface):
         all_nodes = self.graph.get_all_v()
         for k, v in all_nodes.items():
             if v.pos is None:
-                x_ran = random.uniform(0.5,self.graph.v_size())
-                y_ran = random.uniform(0.5,self.graph.v_size())
+                x_ran = random.uniform(0.5, self.graph.v_size())
+                y_ran = random.uniform(0.5, self.graph.v_size())
                 v.pos = (x_ran, y_ran)
 
         x_val = []
@@ -206,10 +224,10 @@ class GraphAlgo(GraphAlgoInterface):
         for n in all_nodes.values():
             x = n.pos[0]
             y = n.pos[1]
-            for k in self.graph.all_out_edges_of_node(n.key).keys():
+            for k in self.graph.all_out_edges_of_node(n.id).keys():
                 dx = self.graph.get_node(k).pos[0]
                 dy = self.graph.get_node(k).pos[1]
-                plt.arrow(x, y, dx-x-0.05, dy-y-0.05, head_width=0.08, length_includes_head=True)
+                plt.arrow(x, y, dx - x - 0.05, dy - y - 0.05, head_width=0.08, length_includes_head=True)
 
-        plt.plot(x_val, y_val,'o')
+        plt.plot(x_val, y_val, 'o')
         plt.show()
