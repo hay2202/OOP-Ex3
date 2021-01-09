@@ -16,9 +16,4 @@ class Node:
         return f"Node id #{self.id}"
 
     def __lt__(self, other):
-        if self.weight == other.weight:
-            return 0
-        elif self.weight > other.weight:
-            return 1
-        else:
-            return -1
+        return self.weight < other.weight
