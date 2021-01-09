@@ -12,7 +12,7 @@ class DiGraph(GraphInterface):
         self.num_of_nodes = 0
         self.num_of_edges = 0
 
-    def __eq__(self, other):
+    def __eq__(self, other): #
         if isinstance(other, DiGraph):
             if self.num_of_nodes != other.num_of_nodes or self.num_of_edges != other.num_of_edges:
                 return False

@@ -40,7 +40,6 @@ def graph_creator_b():
     g.add_edge(7, 5, 1)
     g.add_edge(8, 7, 1)
     g.add_edge(8, 6, 1)
-
     return g
 
 
