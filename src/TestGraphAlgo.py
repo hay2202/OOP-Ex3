@@ -93,7 +93,7 @@ class TestGraphAlgo(unittest.TestCase):
         self.assertIsNone(y)
 
     def test_connected_components(self):
-        g = graph_creator()
+        g = graph_creator_b()
         graph = GraphAlgo()
         graph.__init__(g)
         lst = graph.connected_components()
