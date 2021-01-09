@@ -12,6 +12,23 @@ class DiGraph(GraphInterface):
         self.num_of_nodes = 0
         self.num_of_edges = 0
 
+    def __eq__(self, other):
+        if isinstance(other, DiGraph):
+            if self.num_of_nodes != other.num_of_nodes or self.num_of_edges != other.num_of_edges:
+                return False
+            for i in other.get_all_v():
+                if not self.Nodes.__contains__(i.key):
+                    return False
+                all_in_other = other.all_in_edges_of_node(i.key)
+                all_out_other = other.all_out_edges_of_node(i.key)
+                all_in_self = self.all_in_edges_of_node(i.key)
+                all_out_self = self.all_out_edges_of_node(i.key)
+                if all_in_self != all_in_other or all_out_self != all_out_other:
+                    return False
+            return True
+        else:
+            return False
+
     def v_size(self) -> int:
         return self.num_of_nodes
 
