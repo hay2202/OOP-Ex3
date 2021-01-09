@@ -12,14 +12,14 @@ from node import Node
 
 def dijkstra(g, src, dest):
     q = queue.PriorityQueue()
-    q.put(src)
+    q.put(g.get_node(src))
     path = {src: -1}  # adding the src to the path and queue
     while not q.empty():
-        curr = g.get_node(q.get())
+        curr = q.get()
         if curr.info is None:  # true if we didn't visit this node
             curr.info = 'v'
-            if curr.id == dest:  # when we get to dest node
-                return path
+            # if curr.id == dest:  # when we get to dest node
+            #     return path
             for k, v in g.all_out_edges_of_node(curr.id).items():  # moving on each neighbour of curr
                 temp = g.get_node(k)
                 if temp.info is None:  # true if we didn't visit this node
@@ -32,7 +32,7 @@ def dijkstra(g, src, dest):
                     else:  # if it's first time we reach to this node
                         temp.weight = w
                         path[k] = curr.id
-                    q.put(temp.id)
+                    q.put(temp)
 
     return path
 
@@ -192,7 +192,10 @@ class GraphAlgo(GraphAlgoInterface):
         graph = self.get_graph()
         lst = []
         for i in graph.get_all_v().keys():
-            lst.append(self.connected_component(i))
+            a = self.connected_component(i)
+            a.sort()
+            if not lst.__contains__(a):
+                lst.append(a)
         return lst
 
     def plot_graph(self) -> None:
