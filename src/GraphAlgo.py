@@ -202,6 +202,13 @@ class GraphAlgo(GraphAlgoInterface):
         Otherwise, they will be placed in a random but elegant manner.
         @return: None
         """
+        if self.graph.v_size() > 15:
+            head_p = 0.00025
+            wid_p = 0.00001
+        else:
+            head_p = 0.2
+            wid_p = 0.001
+
         all_nodes = self.graph.get_all_v()
         for k, v in all_nodes.items():
             if v.pos is None:
@@ -219,17 +226,17 @@ class GraphAlgo(GraphAlgoInterface):
         fig, ax = plt.subplots()  # draw id nodes
         ax.scatter(x_val, y_val)
         for i, txt in enumerate(n):
-            ax.annotate(txt, (x_val[i] + 0.02, y_val[i] + 0.02))
+            ax.annotate(txt, (x_val[i] + 0.0002, y_val[i] + 0.0002))
 
         for n in all_nodes.values():
             x = n.pos[0]
             y = n.pos[1]
-            for k in self.graph.all_out_edges_of_node(n.id).keys():
+            for k in self.graph.all_out_edges_of_node(n.id).keys():     # draw edges
                 dx = self.graph.get_node(k).pos[0]
                 dy = self.graph.get_node(k).pos[1]
-                plt.arrow(x, y, dx - x - 0.05, dy - y - 0.05, head_width=0.08, length_includes_head=True)
+                plt.arrow(x, y, dx - x, dy - y, head_width=head_p, length_includes_head=True,width=wid_p)
 
-        plt.plot(x_val, y_val, 'o')
+        plt.plot(x_val, y_val, 'or')
         plt.show()
 
 
