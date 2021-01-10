@@ -10,4 +10,9 @@ and also what the connected components of a particular vertex are and also on th
 
 ### **Implementation of graph A1 from doc:**   
 ### [graph A1 in json](https://github.com/hay2202/OOP-Ex3/blob/master/doc/kind%20of%20graph/A1)
-![](https://github.com/hay2202/OOP-Ex3/blob/master/doc/photo_of_graph.png)
+![](https://github.com/hay2202/OOP-Ex3/blob/master/doc/photo_of_graph.png)  
+
+
+  
+  
+  ### - [For more details go to wiki](https://github.com/hay2202/OOP-Ex3/wiki)
