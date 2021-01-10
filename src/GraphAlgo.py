@@ -5,9 +5,9 @@ import queue
 import json
 import random
 import matplotlib.pyplot as plt
-from GraphAlgoInterface import GraphAlgoInterface
-from DiGraph import DiGraph
-from node import Node
+from src.GraphAlgoInterface import GraphAlgoInterface
+from src.DiGraph import DiGraph
+from src.node import Node
 
 
 def dijkstra(g, src, dest):

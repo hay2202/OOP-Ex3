@@ -1,5 +1,5 @@
-from GraphInterface import GraphInterface
-from node import Node
+from src.GraphInterface import GraphInterface
+from src.node import Node
 
 
 class DiGraph(GraphInterface):
@@ -146,6 +146,13 @@ class DiGraph(GraphInterface):
         return False
 
     def has_edge(self, id1, id2):
+        """
+        Checks whether there is an edge between the two vertices
+        @param id1: The start vertex
+        @param id2: The end vertex
+        @return : True if there is an edge, otherwise false
+        """
+
         if self.Edges[id1].__contains__(id2):
             return True
         else:
