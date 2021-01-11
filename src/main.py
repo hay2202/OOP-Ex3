@@ -151,9 +151,9 @@ def check6():
 
 
 if __name__ == '__main__':
-    # check1()
+    check1()
     check2()
-    # check3()
+    check3()
     # check4()
     # check5()
     # check6()

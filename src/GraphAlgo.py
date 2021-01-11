@@ -182,7 +182,7 @@ class GraphAlgo(GraphAlgoInterface):
         if lst2 is None:
             return []
         st2 = set(lst2)
-        return list(st1 & st2)  # maybe its not work its cutting between groups
+        return list(st1 & st2)
 
     def connected_components(self) -> List[list]:
         """
