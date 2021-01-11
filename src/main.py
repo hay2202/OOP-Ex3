@@ -3,6 +3,7 @@ import time
 
 
 def main():
+    lkj = 0
     # g = GraphAlgo()
     # start = time.time()
     # g.load_from_json("/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_no_pos/G_10_80_0.json")
@@ -813,12 +814,12 @@ def main():
     # end = time.time()
     # print("connected_components -> : %start sec" % (end - start))
     # ---------------------------------------------------------------------------------------------------
-    g = GraphAlgo()
-    g.load_from_json("/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_random_pos/G_30000_240000_2.json")
-    start = time.time()
-    g.connected_component(28000)
-    end = time.time()
-    print("connected_component -> 28000 : %start sec" % (end - start))
+    # g = GraphAlgo()
+    # g.load_from_json("/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_random_pos/G_30000_240000_2.json")
+    # start = time.time()
+    # g.connected_component(28000)
+    # end = time.time()
+    # print("connected_component -> 28000 : %start sec" % (end - start))
     # ---------------------------------------------------------------------------------------------------
     # g = GraphAlgo()
     # g.load_from_json("/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_random_pos/G_30000_240000_2.json")
@@ -828,5 +829,164 @@ def main():
     # print("connected_component -> 12345,24678 : %start sec" % (end - start))
 
 
+#
+# if __name__ == '__main__':
+#     main()
+
+def check1():
+    print("********* G_10_80 **********")
+    g = GraphAlgo()
+    g.load_from_json("/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_random_pos/G_10_80_2.json")
+    print("\n")
+    start = time.time()
+    scc = g.connected_components()
+    end = time.time() - start
+    print(f"number of all scc: {scc.__len__()}")
+    print("\n SCC Run time: ", end)
+    print(scc)
+    print("\n")
+    start = time.time()
+    print(f"size of SCC of 8: {len(g.connected_component(8))}")
+    end = time.time() - start
+    print("\n SCC of 8 Run time:  ", end)
+    print("\n")
+    start = time.time()
+    print(g.shortest_path(1, 4))
+    end = time.time() - start
+    print("\n Shortest path(1->4), Run time:  ", end)
+    print("*******************************")
+
+
+def check2():
+    print("\n********* G_100_800 **********")
+    g = GraphAlgo()
+    g.load_from_json("/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_random_pos/G_100_800_2.json")
+    print("\n")
+    start = time.time()
+    scc = g.connected_components()
+    end = time.time() - start
+    print(f"number of all scc: {scc.__len__()}")
+    print("\n SCC Run time:  ", end)
+    print(scc)
+    print("\n")
+    start = time.time()
+    print(f"size of SCC of 66: {g.connected_component(66).__len__()}")
+    end = time.time() - start
+    print("\n SCC of 66 Run time: ", end)
+    print("\n")
+    start = time.time()
+    print(g.shortest_path(5, 9))
+    end = time.time() - start
+    print("\n Shortest path(5->9), Run time:  ", end)
+    print("\n")
+    print("*******************************")
+
+
+def check3():
+    print("\n********* G_1000_8000 **********")
+    g = GraphAlgo()
+    g.load_from_json("/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_random_pos/G_1000_8000_2.json")
+    print("\n")
+    start = time.time()
+    scc = g.connected_components()
+    end = time.time() - start
+    print(f"number of all scc: {scc.__len__()}")
+    print("\n SCC Run time:  ", end)
+    print(scc)
+    print("\n")
+    start = time.time()
+    print(f"size of SCC of 44: {g.connected_component(44).__len__()}")
+    end = time.time() - start
+    print("\n SCC of 44 Run time:  ", end)
+    print("\n")
+    start = time.time()
+    print(g.shortest_path(100, 500))
+    end = time.time() - start
+    print("\n Shortest path(100->500), Run time:  ", end)
+    print("\n")
+    print("*******************************")
+    print("\n")
+
+
+def check4():
+    print("\n********* G_10000_80000 **********")
+    g = GraphAlgo()
+    g.load_from_json("/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_random_pos/G_10000_80000_2.json")
+    print("\n")
+    start = time.time()
+    print(f"size of SCC of 2000: {g.connected_component(2000).__len__()}")
+    end = time.time() - start
+    print("\n SCC of 2000 Run time:  ", end)
+    print("\n")
+    start = time.time()
+    scc = g.connected_components()
+    end = time.time() - start
+    print(f"number of all scc: {scc.__len__()}")
+    print("\n SCC Run time:  ", end)
+    print("\n")
+    start = time.time()
+    print(g.shortest_path(1, 2000))
+    end = time.time() - start
+    print("\n Shortest path(1->2000), Run time:  ", end)
+    print("\n")
+    print("*******************************")
+
+
+def check5():
+    print("\n********* G_20000_160000 **********")
+    g = GraphAlgo()
+    g.load_from_json("/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_random_pos/G_20000_160000_2.json")
+    print("\n")
+    start = time.time()
+    print(f"size of SCC of 12000: {g.connected_component(12000).__len__()}")
+    end = time.time() - start
+    print("\n SCC of 12000 Run time:  ", end)
+    print("\n")
+    start = time.time()
+    scc = g.connected_components()
+    end = time.time() - start
+    print(f"number of all scc: {scc.__len__()}")
+    print("\n SCC Run time:  ", end)
+    print("\n")
+    start = time.time()
+    print(g.shortest_path(1000, 6500))
+    end = time.time() - start
+    print("\n Shortest path(1000->6500), Run time:  ", end)
+    print("\n")
+    print("*******************************")
+    print("\n")
+
+
+def check6():
+    print("\n********* G_30000_240000 **********")
+    g = GraphAlgo()
+    g.load_from_json("/Users/danielsela/PycharmProjects/OOP-Ex3/src/Graphs_on_circle/G_30000_240000_1.json")
+    # print("\n")
+    # start = time.time()
+    # print(f"size of SCC of 28000{g.connected_component(28000).__len__()}")
+    # end = time.time() - start
+    # print("\n SCC of 28000 Run time:  ", end)
+    print("\n")
+    start = time.time()
+    scc = g.connected_components()
+    end = time.time() - start
+    print(scc)
+    print(f"number of all scc: {scc.__len__()}")
+    print("\n SCC Run time: %.3f sec" % end)
+    # print("\n")
+    # start = time.time()
+    # print(g.shortest_path(12345, 24678))
+    # end = time.time() - start
+    # print("\n Shortest path(12345->24678), Run time:  ", end)
+    # print("\n")
+    # print("*******************************")
+    # print("\n")
+
+
 if __name__ == '__main__':
-    main()
+    # check1()
+    # check2()
+    # check3()
+    # check4()
+    # check5()
+    check6()

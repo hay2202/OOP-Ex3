@@ -152,7 +152,6 @@ class GraphAlgo(GraphAlgoInterface):
             return -1, None
         if id1 == id2:
             return 0, [id1]
-        x = self.connected_component(id1)
         reset(self.graph)
         path = dijkstra(self.graph, id1, id2)
         n = self.graph.get_node(id2)
@@ -183,43 +182,23 @@ class GraphAlgo(GraphAlgoInterface):
         if lst2 is None:
             return []
         st2 = set(lst2)
-        return list(st1 & st2)  # maybe its not work its cutting between groups
+        return list(st1 & st2)
 
     def connected_components(self) -> List[list]:
         """
         Finds all the Strongly Connected Component(SCC) in the graph.
         @return: The list all SCC
         """
-        # graph = self.get_graph()
-        # lst = []
-        # for i in graph.get_all_v().keys():
-        #     a = self.connected_component(i)
-        #     a.sort()
-        #     if not lst.__contains__(a):
-        #         lst.append(a)
         graph = self.get_graph()
         lst = []
-        k=[]
-        count = 0
         for i in graph.get_all_v().keys():
-            if count == 0:
+            was = False
+            for x in lst:
+                if x.__contains__(i):
+                    was = True
+            if not was:
                 a = self.connected_component(i)
-                a.sort()
                 lst.append(a)
-                k+=a
-                count += 1
-                # if not lst.__contains__(a):
-                #     lst.append(a)
-            else:
-                if not k.__contains__(i):
-              #  for x in lst:
-                  #  if not x.__contains__(i):
-                        a = self.connected_component(i)
-                        a.sort()
-                        if not lst.__contains__(a):
-                            lst.append(a)
-                        k+=a
-
         return lst
 
     def plot_graph(self) -> None:
@@ -262,6 +241,5 @@ class GraphAlgo(GraphAlgoInterface):
                 dx = self.graph.get_node(k).pos[0]
                 dy = self.graph.get_node(k).pos[1]
                 plt.arrow(x, y, dx - x, dy - y, head_width=head_p, length_includes_head=True, width=wid_p)
-
         plt.plot(x_val, y_val, 'or')
         plt.show()
