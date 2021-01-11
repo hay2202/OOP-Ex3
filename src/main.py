@@ -47,8 +47,8 @@ def check2():
     print(g.shortest_path(5,9))
     end = time.time() - start
     print("\n Shortest path(5->9), Run time: %.3f sec" % end)
-
     print("*******************************")
+
 
 def check3():
     print("\n********* G_1000_8000 **********")
