@@ -241,6 +241,5 @@ class GraphAlgo(GraphAlgoInterface):
                 dx = self.graph.get_node(k).pos[0]
                 dy = self.graph.get_node(k).pos[1]
                 plt.arrow(x, y, dx - x, dy - y, head_width=head_p, length_includes_head=True, width=wid_p)
-
         plt.plot(x_val, y_val, 'or')
         plt.show()
