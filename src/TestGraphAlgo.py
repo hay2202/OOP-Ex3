@@ -1,6 +1,7 @@
 import unittest
 from src.DiGraph import DiGraph
 from src.GraphAlgo import GraphAlgo
+import time
 
 
 def graph_creator():
@@ -46,11 +47,19 @@ def graph_creator_b():
 class TestGraphAlgo(unittest.TestCase):
 
     def test_load_and_save(self):
-        # "/Users/danielsela/PycharmProjects/OOP-Ex3/Graph_no_pos/G_10_80_0.json"
-        # g = graph_creator()
-        graph = GraphAlgo()
-        graph.load_from_json("/Users/danielsela/PycharmProjects/OOP-Ex3/data/A1")
-        graph.plot_graph()
+        # g = GraphAlgo()
+        # g.load_from_json("/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_no_pos/G_10_80_0.json")
+        # g.connected_components()
+        g = GraphAlgo()
+        g.load_from_json("/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_no_pos/G_1000_8000_0.json")
+        start = time.time()
+        g.connected_components()
+        end = time.time()
+        print("connected_components -> : %start sec" % (end - start))
+
+    # graph.load_from_json("/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_on_circle/G_10_80_1.json")
+    # graph.load_from_json("/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_random_pos/G_10_80_2.json")
+    # graph.plot_graph()
     # print(graph.get_graph())
     # self.assertTrue(graph.save_to_json("test_save.json"))
     # self.assertTrue(graph.load_from_json("test_save.json"))
@@ -103,22 +112,22 @@ class TestGraphAlgo(unittest.TestCase):
         self.assertIsNone(y)
 
     def test_connected_components(self):
-        graph = GraphAlgo()
-        graph.load_from_json("/Users/danielsela/PycharmProjects/OOP-Ex3/data/A1")
+        # graph = GraphAlgo()
+        # graph.load_from_json("/Users/danielsela/PycharmProjects/OOP-Ex3/data/A1")
         # lst = graph.connected_component(1)
         # print(lst)
-        # g = graph_creator_b()
-        # graph = GraphAlgo(g)
-        # lst = graph.connected_components()
-        # x0 = lst.pop(0)
-        # self.assertTrue([0, 2, 3, 4] == x0)
-        # self.assertFalse([1, 2, 5] == x0)
-        # x1 = lst.pop(0)
-        # self.assertTrue([1] == x1)
-        # x2 = lst.pop(0)
-        # self.assertTrue([5, 7, 8] == x2)
-        # x2 = lst.pop(0)
-        # self.assertTrue([6] == x2)
+        g = graph_creator_b()
+        graph = GraphAlgo(g)
+        lst = graph.connected_components()
+        x0 = lst.pop(0)
+        self.assertTrue([0, 2, 3, 4] == x0)
+        self.assertFalse([1, 2, 5] == x0)
+        x1 = lst.pop(0)
+        self.assertTrue([1] == x1)
+        x2 = lst.pop(0)
+        self.assertTrue([5, 7, 8] == x2)
+        x2 = lst.pop(0)
+        self.assertTrue([6] == x2)
 
     def test_draw_graph(self):
         g = GraphAlgo()

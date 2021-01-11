@@ -152,6 +152,7 @@ class GraphAlgo(GraphAlgoInterface):
             return -1, None
         if id1 == id2:
             return 0, [id1]
+        x = self.connected_component(id1)
         reset(self.graph)
         path = dijkstra(self.graph, id1, id2)
         n = self.graph.get_node(id2)
@@ -189,13 +190,36 @@ class GraphAlgo(GraphAlgoInterface):
         Finds all the Strongly Connected Component(SCC) in the graph.
         @return: The list all SCC
         """
+        # graph = self.get_graph()
+        # lst = []
+        # for i in graph.get_all_v().keys():
+        #     a = self.connected_component(i)
+        #     a.sort()
+        #     if not lst.__contains__(a):
+        #         lst.append(a)
         graph = self.get_graph()
         lst = []
+        k=[]
+        count = 0
         for i in graph.get_all_v().keys():
-            a = self.connected_component(i)
-            a.sort()
-            if not lst.__contains__(a):
+            if count == 0:
+                a = self.connected_component(i)
+                a.sort()
                 lst.append(a)
+                k+=a
+                count += 1
+                # if not lst.__contains__(a):
+                #     lst.append(a)
+            else:
+                if not k.__contains__(i):
+              #  for x in lst:
+                  #  if not x.__contains__(i):
+                        a = self.connected_component(i)
+                        a.sort()
+                        if not lst.__contains__(a):
+                            lst.append(a)
+                        k+=a
+
         return lst
 
     def plot_graph(self) -> None:
@@ -205,7 +229,7 @@ class GraphAlgo(GraphAlgoInterface):
         Otherwise, they will be placed in a random but elegant manner.
         @return: None
         """
-        if self.graph.v_size() > 15:
+        if self.graph.v_size() > 9:
             head_p = 0.00025
             wid_p = 0.00001
         else:
@@ -234,12 +258,10 @@ class GraphAlgo(GraphAlgoInterface):
         for n in all_nodes.values():
             x = n.pos[0]
             y = n.pos[1]
-            for k in self.graph.all_out_edges_of_node(n.id).keys():     # draw edges
+            for k in self.graph.all_out_edges_of_node(n.id).keys():  # draw edges
                 dx = self.graph.get_node(k).pos[0]
                 dy = self.graph.get_node(k).pos[1]
-                plt.arrow(x, y, dx - x, dy - y, head_width=head_p, length_includes_head=True,width=wid_p)
+                plt.arrow(x, y, dx - x, dy - y, head_width=head_p, length_includes_head=True, width=wid_p)
 
         plt.plot(x_val, y_val, 'or')
         plt.show()
-
-
