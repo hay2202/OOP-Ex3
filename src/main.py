@@ -149,11 +149,18 @@ def check6():
 
     print("*******************************")
 
+def plot():
+    g = GraphAlgo()
+    file = "/Users/danielsela/IdeaProjects/OOP-Ex2/Graphs_on_circle/G_10_80_1.json"
+    g.load_from_json(file)
+    g.plot_graph()
+
 
 if __name__ == '__main__':
-    check1()
-    check2()
-    check3()
+    plot()
+    # check1()
+    # check2()
+    # check3()
     # check4()
     # check5()
     # check6()
