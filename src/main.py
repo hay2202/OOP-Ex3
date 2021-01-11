@@ -5,9 +5,8 @@ from GraphAlgo import GraphAlgo
 def check1():
     print("********* G_10_80 **********")
     g = GraphAlgo()
-    file = "../graphs/G_10_80_1.json"
+    file = "/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_on_circle/G_10_80_1.json"
     g.load_from_json(file)
-
     start = time.time()
     print(f"size of SCC of 8: {g.connected_component(8).__len__()}")
     end = time.time() - start
@@ -29,7 +28,7 @@ def check1():
 def check2():
     print("\n********* G_100_800 **********")
     g = GraphAlgo()
-    file = "../graphs/G_100_800_1.json"
+    file = "/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_on_circle/G_100_800_1.json"
     g.load_from_json(file)
 
     start = time.time()
@@ -53,7 +52,7 @@ def check2():
 def check3():
     print("\n********* G_1000_8000 **********")
     g = GraphAlgo()
-    file = "../graphs/G_1000_8000_1.json"
+    file = "/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_on_circle/G_1000_8000_1.json"
     g.load_from_json(file)
 
     start = time.time()
@@ -78,7 +77,7 @@ def check3():
 def check4():
     print("\n********* G_10000_80000 **********")
     g = GraphAlgo()
-    file = "../graphs/G_10000_80000_1.json"
+    file = "/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_on_circle/G_10000_80000_1.json"
     g.load_from_json(file)
 
     start = time.time()
@@ -103,7 +102,7 @@ def check4():
 def check5():
     print("\n********* G_20000_160000 **********")
     g = GraphAlgo()
-    file = "../graphs/G_20000_160000_1.json"
+    file = "/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_on_circle/G_20000_160000_1.json"
     g.load_from_json(file)
 
     start = time.time()
@@ -128,7 +127,7 @@ def check5():
 def check6():
     print("\n********* G_30000_240000 **********")
     g = GraphAlgo()
-    file = "../graphs/G_30000_240000_1.json"
+    file = "/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_on_circle/G_30000_240000_1.json"
     g.load_from_json(file)
 
     start = time.time()
@@ -151,16 +150,16 @@ def check6():
 
 def plot():
     g = GraphAlgo()
-    file = "/Users/danielsela/IdeaProjects/OOP-Ex2/Graphs_on_circle/G_10_80_1.json"
+    file = "/Users/danielsela/PycharmProjects/OOP-Ex3/Graphs_on_circle/G_10_80_1.json"
     g.load_from_json(file)
     g.plot_graph()
 
 
 if __name__ == '__main__':
-    plot()
-    # check1()
-    # check2()
-    # check3()
-    # check4()
-    # check5()
-    # check6()
+    # plot()
+    check1()
+    check2()
+    check3()
+    check4()
+    check5()
+    check6()
