@@ -17,9 +17,9 @@ In our comparisons we tested the algorithms in each language versus networkX (in
   
       
 # Reference  
+### [For more details Ex3 wiki](https://github.com/hay2202/OOP-Ex3/wiki)   
 ### [Comparison results](https://github.com/hay2202/OOP-Ex3/wiki/Comparison-results)      
 ### [For Ex2 projec(java)](https://github.com/hay2202/OOP-Ex2)      
-### [The code of the graphs in java](https://github.com/hay2202/OOP-Ex2/tree/master/src/api)    
-### [For more details Ex3 wiki](https://github.com/hay2202/OOP-Ex3/wiki)  
+### [The code of the graphs in java](https://github.com/hay2202/OOP-Ex2/tree/master/src/api)     
 ### [For more details Ex2 wiki](https://github.com/hay2202/OOP-Ex2/wiki)
 ### [For graph: G_10_80_1.json](https://github.com/hay2202/OOP-Ex3/blob/master/doc/graphs/G_10_80_1.json)
